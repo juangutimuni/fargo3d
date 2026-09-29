@@ -9,6 +9,8 @@ real ux(real);
 real uy(real);
 real bisect(real a, real b, int N, real (*u)(real), int);
 void compute_ux_constants(void);
+real uz(real);                    //new
+void compute_uz_constants(void);  //new
 
 //matplotlib.c prototypes
 

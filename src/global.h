@@ -84,6 +84,12 @@ real Xmc2;
 real Xmc3;
 real Xmc4;
 real X_mesh_I;
+real Zmc0;      //new
+real Zmc1;      //new
+real Zmc2;      //new
+real Zmc3;      //new
+real Zmc4;      //new
+real Z_mesh_I;  //new
 				   
 //FIELDS VARIABLES
 
