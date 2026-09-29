@@ -1,0 +1,49 @@
+# You may enter a description between the BEGIN and END labels.
+# BEGIN
+# The "3d_sbbh" setup is a spherical locally isothermal setup that may
+# be used to simulate a "full-disk" (symmetric or not with respect to
+# the equator). If you want to simulate a half disk, you should create
+# another setup (3d_sbbh) slightly different from this one.  In order
+# to run it, do:
+# make SETUP=3d_sbbh
+# ./fargo3d in/3d_sbbh.par
+# Note: if you want to simulate a half disk with reflecting boundary
+# conditions at the midplane, use the setup 'p3diso'.
+# END
+#-------------------------------------------------------------------------
+
+FLUIDS := 0
+NFLUIDS = 1
+FARGO_OPT += -DNFLUIDS=${NFLUIDS}
+
+# Monitoring
+#MONITOR_2D = MASS | MOM_X
+MONITOR_SCALAR =  TORQ #| MASS | MOM_X
+#MONITOR_RAW = TORQ
+
+FARGO_OPT +=  -DX
+FARGO_OPT +=  -DY
+FARGO_OPT +=  -DZ
+
+#Coordinate System.
+FARGO_OPT +=  -DSPHERICAL
+
+#Physics
+FARGO_OPT += -DISOTHERMAL
+FARGO_OPT += -DALPHAVISCOSITY
+FARGO_OPT += -DPOTENTIAL
+
+#Buffer zones
+FARGO_OPT += -DSTOCKHOLM
+FARGO_OPT += -DRAM
+FARGO_OPT += -DSBBH
+
+#Cuda blocks
+ifeq (${GPU}, 1)
+FARGO_OPT += -DBLOCK_X=16
+FARGO_OPT += -DBLOCK_Y=8
+FARGO_OPT += -DBLOCK_Z=1    # was =1
+endif
+
+# New
+FARGO_OPT += -DHILLCUT
