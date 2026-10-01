@@ -63,6 +63,7 @@ void ChangeArch() {
   copy_velocities = copy_velocities_cpu;
   _ComputeForce = _ComputeForce_cpu;
   StockholmBoundary = StockholmBoundary_cpu;
+  _ComputeSink = _ComputeSink_cpu;
   
   visctensor_cart   = visctensor_cart_cpu;
   addviscosity_cart = addviscosity_cart_cpu;
@@ -339,6 +340,12 @@ void ChangeArch() {
 	if(strval[0] == 'g'){
 	  _ComputeForce = _ComputeForce_gpu;
 	  printf("ComputeForce runs on the GPU\n");
+	}
+      }
+   if (strcmp(name, "computesink") == 0) {
+	if(strval[0] == 'g'){
+	  _ComputeSink = _ComputeSink_gpu;
+	  printf("ComputeSink runs on the GPU\n");
 	}
       }
       if (strcmp(name, "computeslopes") == 0) {

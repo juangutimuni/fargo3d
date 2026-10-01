@@ -145,6 +145,11 @@ ex void ComputePressureFieldAd_cpu(void);
 //ComPresIso.c prototypes;
 ex void ComputePressureFieldIso_cpu(void);
 
+//CompSink.c prototypes;
+ex void ComputeSink(real);
+ex void _ComputeSink_cpu(real);
+
+
 //ComPresPoly.c prototypes;
 ex void ComputePressureFieldPoly_cpu(void);
 
@@ -495,6 +500,9 @@ ex void Input_Contour_Outside (Field *);
 //comm_device prototypes
 ex void MakeCommunicatorGPU (int, int, int, int, int, int, int, int, int, int, int, int);
 ex void ResetBuffersGPU(void);
+
+//CompSink.c prototypes;
+ex void _ComputeSink_gpu(real);
 
 //resetfields prototypes
 ex void Reset_field_gpu(Field*);

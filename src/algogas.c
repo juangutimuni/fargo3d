@@ -41,6 +41,7 @@ void Sources(real dt) {
 #ifdef POLYTROPIC
   FARGO_SAFE(ComputePressureFieldPoly());
 #endif
+
   //-----------------------------------------------------------------------------
     
   InitSpecificTime (&t_Hydro, "Eulerian Hydro (no transport) algorithms");
@@ -82,7 +83,9 @@ void Sources(real dt) {
 #ifdef ADIABATIC
  if(Fluidtype == GAS) FARGO_SAFE(SubStep3(dt));
 #endif
-    
+    #ifdef SINK
+    FARGO_SAFE(ComputeSink(dt)); 
+    #endif
   GiveSpecificTime (t_Hydro);
   
 #ifdef MHD //-------------------------------------------------------------------

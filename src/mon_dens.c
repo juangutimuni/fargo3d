@@ -23,6 +23,8 @@ void mon_dens_cpu () {
   int size_x = Nx+2*NGHX;
   int size_y = Ny+2*NGHY;
   int size_z = Nz+2*NGHZ;
+  real gammasink = GAMMASINK;
+  real rsink = RSINK;
 //<\EXTERNAL>
 
 //<INTERNAL>
@@ -30,13 +32,29 @@ void mon_dens_cpu () {
   int j;
   int k;
   int ll;
+  real sink;
+  real dx;
+  real dy;
+  real dz=0.0;
+  real dist;
 //<\INTERNAL>
 
 //<CONSTANT>
-// real Sxi(Nx);
+// real Xplanet(1);
+// real Yplanet(1);
+// real Zplanet(1);
+// real VXplanet(1);
+// real VYplanet(1);
+// real VZplanet(1);
+// real MplanetVirtual(1);
 // real Syk(Nz+2*NGHZ);
 // real InvVj(Ny+2*NGHY);
+// real xmin(Nx+2*NGHX+1);
+// real ymin(Ny+2*NGHY+1);
+// real zmin(Nz+2*NGHZ+1);
+// real Sxi(Nx);
 //<\CONSTANT>
+
 
 //<MAIN_LOOP>
 
@@ -52,8 +70,26 @@ void mon_dens_cpu () {
       for (i=0; i<size_x; i++ ) {
 #endif
 //<#>
-	ll = l;
-	interm[ll] = dens[ll]*Vol(i,j,k);
+  interm[ll] = 0.;
+
+  	ll = l;
+  #ifdef CYLINDRICAL
+	dx = ymed(j)*cos(xmed(i))-Xplanet;
+	dy = ymed(j)*sin(xmed(i))-Yplanet;
+#ifdef Z
+	dz = zmed(k)-Zplanet;
+#endif
+#endif
+#ifdef SPHERICAL
+	dx = ymed(j)*cos(xmed(i))*sin(zmed(k))-Xplanet;
+	dy = ymed(j)*sin(xmed(i))*sin(zmed(k))-Yplanet;
+#ifdef Z
+	dz = ymed(j)*cos(zmed(k))-Zplanet;
+#endif
+#endif
+  dist = sqrt(dx*dx + dy*dy + dz*dz);
+  sink = 1 - dist*dist /(rsink*rsink);
+	if(dist/rsink < 1.) interm[ll] = dens[ll] * (gammasink*sink*sink)*Vol(i,j,k);
 //<\#>
 #ifdef X
       }
