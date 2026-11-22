@@ -210,7 +210,7 @@ void InitSpace() {
   boolean already_z=NO;
   int temp, relay;
   int init = 0;
-  int j_global, j_local;
+  int j_global, j_local, k_global, k_local;   //new;
 
  
   if (*SPACING=='F') { //Fixed spacing
@@ -307,10 +307,23 @@ void InitSpace() {
 
 #endif //Y
 
-#ifdef Z
-  dz = (ZMAX-ZMIN)/NZ;
-  for (k = 0; k<Nz+2*NGHZ+1; k++) {
-      Zmin(k) = ZMIN + dz*(k+Z0-NGHZ);
+#ifdef Z         //new, analog to Y
+  real zmin_global;
+  zmin_global = ZMIN;
+  Zmin(NGHZ)  = ZMIN;
+  for (k_global = NGHZ; k_global < NZ+NGHZ+1; k_global++) {
+    if (k_global > NGHZ) zmin_global = bisect(zmin_global, 1.1*ZMAX, NZ+1, uz, 0);
+    k_local = k_global - Z0;
+    if ( (k_local > 0) && (k_local <= Nz+2*NGHZ) )
+      Zmin(k_local) = zmin_global;
+  }
+  if (K == 0) {
+    for (k = 0; k < NGHZ; k++)
+      Zmin(NGHZ - (k+1)) = bisect(0.5*ZMIN, Zmin(NGHZ-k), NZ+1, uz, 1);
+  }
+  if (K == Ncpu_y - 1) {
+    for (k = 0; k < NGHZ; k++)
+      Zmin(Nz+NGHZ+k+1) = bisect(Zmin(Nz+NGHZ+k), 1.5*ZMAX, NZ+1, uz, 0);
   }
 #endif //Z
  }
@@ -578,9 +591,9 @@ void SelectFluid(int n) {
   Vy_temp = Fluids[n]->Vy_temp;
   Vy_half = Fluids[n]->Vy_half;
 #endif
+  Vz_temp = Fluids[n]->Vz_temp; // this used to be inside the #ifdef Z below
 #ifdef Z
   Vz = Fluids[n]->Vz;
-  Vz_temp = Fluids[n]->Vz_temp;
   Vz_half = Fluids[n]->Vz_half;
 #endif
 #ifdef STOCKHOLM
@@ -622,6 +635,7 @@ void CreateFields() {
 #endif
 
   Pot     = CreateField("potential", 0,0,0,0);
+  Mdot    = CreateField("mdot", 0,0,0,0);       //new
   Slope   = CreateField("Slope"    , 0,0,0,0);
   DivRho  = CreateField("DivRho"   , 0,0,0,0);  // This field cannot
 						// be aliased wherever

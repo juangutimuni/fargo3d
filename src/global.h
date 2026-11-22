@@ -117,6 +117,7 @@ Field *Mmy;
 Field *Mmz;
 
 Field *Pot;
+Field *Mdot;
 
 Field *DivRho;
 Field *DensStar;

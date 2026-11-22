@@ -48,7 +48,7 @@ void InitMonitoring3D (int bitchoice) {
 }
 
 void InitMonitoring() {
-  InitFunctionMonitoring (MASS,    mon_dens, "mass", TOTAL, "YCZC", INDEP_PLANET);
+  InitFunctionMonitoring (MASS,    mon_dens, "mass", TOTAL, "YCZC", DEP_PLANET);
   InitFunctionMonitoring (MOM_X,   mon_momx, "momx", TOTAL, "YCZC", INDEP_PLANET);
   InitFunctionMonitoring (MOM_Y,   mon_momy, "momy", TOTAL, "YCZC", INDEP_PLANET);
   InitFunctionMonitoring (MOM_Z,   mon_momz, "momz", TOTAL, "YCZC", INDEP_PLANET);

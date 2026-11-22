@@ -161,15 +161,15 @@ void AdvanceSystemRK5 (real dt) {
   Sys->x[0] = R0 + cos(-M_PI + phase) * BBHSEPARATION * 0.5;
   Sys->y[0] = sin(-M_PI + phase) * BBHSEPARATION * 0.5;
   Sys->z[0] = 0.0;
-  Sys->vx[0] = -sin(-M_PI/2 + phase) * BBHOMEGARATIO * BBHSEPARATION * 0.5;
-  Sys->vy[0] = R0 * OMEGAFRAME0 + cos(-M_PI/2 + phase) * BBHOMEGARATIO * BBHSEPARATION * 0.5;
+  Sys->vx[0] = -sin(-M_PI + phase) * BBHOMEGARATIO * BBHSEPARATION * 0.5;
+  Sys->vy[0] =  cos(-M_PI + phase) * BBHOMEGARATIO * BBHSEPARATION * 0.5;
   Sys->vz[0] = 0.0;
   
   Sys->x[1] = R0 + cos(0 + phase) * BBHSEPARATION * 0.5;
   Sys->y[1] = sin(0 + phase) * BBHSEPARATION * 0.5;
   Sys->z[1] = 0.0;
-  Sys->vx[1] = -sin(M_PI/2 + phase) * BBHOMEGARATIO * BBHSEPARATION * 0.5;
-  Sys->vy[1] = R0 * OMEGAFRAME0 + cos(M_PI/2 + phase) * BBHOMEGARATIO * BBHSEPARATION * 0.5;
+  Sys->vx[1] = -sin(phase) * BBHOMEGARATIO * BBHSEPARATION * 0.5;
+  Sys->vy[1] =  cos(phase) * BBHOMEGARATIO * BBHSEPARATION * 0.5;
   Sys->vz[1] = 0.0;
   
   
