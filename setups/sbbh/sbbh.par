@@ -8,12 +8,18 @@ Alpha               1.0e-3              Uniform kinematic viscosity
 SigmaSlope          1.0                 Slope for the surface density
 FlaringIndex        0.0                 Slope for the aspect-ratio
 
-Bbhomegaratio       12.856406460551014                     Omega_b_in_rotating_frame / Omega_K
-Bbhseparation       0.003734503955464305                     Binary separation
 
-GammaSink    500.0
+### Binary parameters 
+
+Bbhomegaratio       12.856406460551014                     Omega_b_in_rotating_frame - Omega_K
+Bbhseparation       0.003734503955464305                   Binary separation
+
+
+### Sinks
+
+GammaSink    4.0
 RSink        0.0001400394716
-DeltaSink    0.0    
+DeltaSink    0.0                     # for torq free: dsink=0  
 
 # Radial range for damping (in period-ratios). Values smaller than one
 # prevent damping.
@@ -28,14 +34,14 @@ TauDamp             0.3
 ### Planet parameters
 
 PlanetConfig        planets/sbbh.cfg
-ThicknessSmoothing  0.007002
+ThicknessSmoothing  0.007002       Smoothing parameters in disk thickness (ts = 3*deltaR/H)
 IndirectTerm        No
 
 ExcludeHill	    yes
 
 ### Mesh parameters
 
-Nx                  512                     Azimuthal number of zones
+Nx                  4096                     Azimuthal number of zones
 Ny                  2048                     Radial number of zones
 
 Xmin               -3.14159265358979323844  Lower boundary in azimuth
@@ -58,8 +64,8 @@ OmegaFrame          1.0                  Angular velocity for the frame of refer
 
 ### Output control parameters
 
-DT              0.0314159265359             Physical time between fine-grain outputs
-Ninterm         1                          Number of DTs between scalar fields outputs
-Ntot            60                        Total number of DTs (2pi = 1 orbit)
+DT              0.01570796326795            Physical time between fine-grain outputs
+Ninterm         2                          Number of DTs between scalar fields outputs
+Ntot            200                         Total number of DTs (2pi = 1 orbit)
 
-OutputDir       @outputs/2d_sbbh_lambda4_sinktest7
+OutputDir       @outputs/2d_sbbh_lambda4_gamma4_free_released
